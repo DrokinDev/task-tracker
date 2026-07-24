@@ -1,7 +1,8 @@
-from pathlib import Path
 import json
 import sys
 from datetime import datetime
+from pathlib import Path
+
 
 def add(tasks, task_description):
     if task_description is not None:
@@ -40,7 +41,7 @@ def delete(tasks,task_id):
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
-    
+
     if (0 > task_id) or (task_id >= len(tasks)):
         print("Id out of bounds")
         return
@@ -57,11 +58,11 @@ def mark_in_progress(tasks,task_id):
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
-    
+
     if (0 > task_id) or (task_id >= len(tasks)):
         print("Id out of bounds")
         return
-    
+
     if task_id is None:
         print("Incorrect argument")
     else:
@@ -120,14 +121,14 @@ def main():
     with open("tasks.json", "r") as f:
             tasks = json.load(f)
 
-    value = sys.argv[2] if len(sys.argv) > 2 else None 
+    value = sys.argv[2] if len(sys.argv) > 2 else None
 
     if len(sys.argv) > 1:
         match sys.argv[1]:
             case "add":
                 add(tasks, value)
             case "update":
-                value2 = sys.argv[3] if len(sys.argv) > 3 else None 
+                value2 = sys.argv[3] if len(sys.argv) > 3 else None
                 update(tasks,value,value2)
             case "delete":
                 delete(tasks,value)
@@ -137,8 +138,8 @@ def main():
                 mark_done(tasks, value)
             case "list":
                 list_tasks(tasks, value)
-                
-    
+
+
     with open("tasks.json","w") as f:
         json.dump(tasks,f)
 
