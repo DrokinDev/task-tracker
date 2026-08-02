@@ -113,7 +113,7 @@ def createTask(task_id, description):
 def main():
 
     #Edge case or case
-    if not Path("tasks.json").exists():
+    if (not Path("tasks.json").exists()) or (Path("tasks.json").stat().st_size == 0):
         with open("tasks.json", "w") as f:
             json.dump([] ,f)
 
@@ -138,6 +138,8 @@ def main():
                 mark_done(tasks, value)
             case "list":
                 list_tasks(tasks, value)
+            case _:
+                print("Unrecognized Command")
 
 
     with open("tasks.json","w") as f:
