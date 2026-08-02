@@ -8,13 +8,13 @@ def add(tasks, task_description):
     if task_description is not None:
         task = createTask(len(tasks),task_description)
         tasks.append(task)
-        print(f'Task added sucessfully (ID:{task["id"]})')
+        print(f'Task added successfully (ID:{task["id"] + 1})')
     else:
         print("Incorrect argument")
 
 def update(tasks,task_id, task_description):
     try:
-        task_id = int(task_id)
+        task_id = int(task_id) - 1
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
@@ -31,13 +31,12 @@ def update(tasks,task_id, task_description):
             if task["id"] == task_id:
                 task["description"] = task_description
                 task["updatedAt"] = str(datetime.now())
-                print(f'Task updated sucessfully (ID:{task["id"]})')
+                print(f'Task updated successfully (ID:{task["id"] + 1})')
                 return
-
 
 def delete(tasks,task_id):
     try:
-        task_id = int(task_id)
+        task_id = int(task_id) - 1
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
@@ -50,11 +49,11 @@ def delete(tasks,task_id):
         task["id"] -=1
 
     del tasks[task_id]
-    print(f'Task deleted sucessfully (ID:{task_id})')
+    print(f'Task deleted successfully (ID:{task_id + 1})')
 
 def mark_in_progress(tasks,task_id):
     try:
-        task_id = int(task_id)
+        task_id = int(task_id) - 1
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
@@ -69,11 +68,11 @@ def mark_in_progress(tasks,task_id):
         task_id = int(task_id)
         tasks[task_id]["status"] = "in-progress"
         tasks[task_id]["updatedAt"] = str(datetime.now())
-        print(f'Task marked sucessfully (ID:{task_id})')
+        print(f'Task marked successfully (ID:{task_id + 1})')
 
 def mark_done(tasks,task_id):
     try:
-        task_id = int(task_id)
+        task_id = int(task_id) - 1
     except (ValueError,TypeError):
         print("Incorrect argument")
         return
@@ -88,16 +87,16 @@ def mark_done(tasks,task_id):
         task_id = int(task_id)
         tasks[task_id]["status"] = "done"
         tasks[task_id]["updatedAt"] = str(datetime.now())
-        print(f'Task marked sucessfully (ID:{task_id})')
+        print(f'Task marked successfully (ID:{task_id + 1})')
 
 def list_tasks(tasks,filter=None):
     if filter is None:
         for task in tasks:
-            print(f'ID: {task["id"]} Description: {task["description"]} Status: {task["status"]} Created: {task["createdAt"]} Last Update: {task["updatedAt"]}')
+            print(f'ID: {task["id"]+1} Description: {task["description"]} Status: {task["status"]} Created: {task["createdAt"]} Last Update: {task["updatedAt"]}')
     elif filter in ["done","todo","in-progress"]:
         for task in tasks:
             if task["status"] == filter:
-                print(f'ID: {task["id"]} Description: {task["description"]} Status: {task["status"]} Created: {task["createdAt"]} Last Update: {task["updatedAt"]}')
+                print(f'ID: {task["id"]+1} Description: {task["description"]} Status: {task["status"]} Created: {task["createdAt"]} Last Update: {task["updatedAt"]}')
     else:
         print("Wrong filter")
 
@@ -122,6 +121,7 @@ def main():
             tasks = json.load(f)
 
     value = sys.argv[2] if len(sys.argv) > 2 else None
+
 
     if len(sys.argv) > 1:
         match sys.argv[1]:
